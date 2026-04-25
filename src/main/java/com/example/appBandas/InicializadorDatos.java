@@ -209,8 +209,8 @@ public class InicializadorDatos {
                 usuario2.setNombre("Laura");
                 usuario2.setApellidos("Martínez Ruiz");
                 usuario2.setDni("87654321B");
-                usuario2.setEmail("laura@email.com");
-                usuario2.setPassword("mypassword123");
+                usuario2.setEmail("c");
+                usuario2.setPassword("c");
                 usuario2.setTelefono("611223344");
                 usuario2.setRolApp("Musico");
                 usuario2.setAprobado(true);  // Aprobado por defecto para pruebas
