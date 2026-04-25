@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * Incorpora el sistema de validación 'aprobado' para la sala de espera.
  */
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuarios")
 public class Usuario {
 
 	@Id
