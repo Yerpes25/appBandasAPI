@@ -84,7 +84,7 @@ import java.time.LocalDateTime;
  * con información de prueba la primera vez que se ejecuta la aplicación.
  * Atrapa las entidades guardadas para asegurar la generación de IDs.
  */
-@Configuration
+//@Configuration
 public class InicializadorDatos {
 
     @Bean
