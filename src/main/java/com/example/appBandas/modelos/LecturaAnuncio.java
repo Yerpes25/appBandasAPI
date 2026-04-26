@@ -1,6 +1,12 @@
 package com.example.appBandas.modelos;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,13 +23,11 @@ public class LecturaAnuncio {
     private LecturaAnuncioId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idUsuario")
-    @JoinColumn(name = "idUsuario")
+    @JoinColumn(name = "idUsuario", insertable = false, updatable = false)
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idAnuncios")
-    @JoinColumn(name = "idAnuncios")
+    @JoinColumn(name = "idAnuncios", insertable = false, updatable = false)
     private TablonAnuncio anuncio;
 
     @JsonProperty("fLectura")

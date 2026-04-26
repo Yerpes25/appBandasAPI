@@ -142,8 +142,8 @@ public class InicializadorDatos {
                 banda1.setFotoPortada("https://miservidor.com/fotos/portada_santacecilia.jpg");
                 banda1.setColorPrimario("#0D47A1");
                 banda1.setfFundacion(LocalDate.of(1980, 10, 24));
-                banda.setFechaRegistro(LocalDate.now()); 
-                banda.setUltimaConexion(LocalDate.now().minusMonths(5));
+                banda1.setFechaRegistro(LocalDate.now()); 
+                banda1.setUltimaConexion(LocalDate.now().minusMonths(5));
                 banda1 = bandaRepo.save(banda1);
                 
                 Banda banda2 = new Banda();
@@ -152,8 +152,8 @@ public class InicializadorDatos {
                 banda2.setFotoPortada("https://miservidor.com/fotos/portada_santacecilia.jpg");
                 banda2.setColorPrimario("#0D47A1");
                 banda2.setfFundacion(LocalDate.of(2000, 10, 24));
-                banda.setFechaRegistro(LocalDate.now()); 
-                banda.setUltimaConexion(LocalDate.now().minusMonths(7));
+                banda2.setFechaRegistro(LocalDate.now()); 
+                banda2.setUltimaConexion(LocalDate.now().minusMonths(7));
                 banda2 = bandaRepo.save(banda2);
 
                 Seccion seccion = new Seccion();
@@ -215,7 +215,7 @@ public class InicializadorDatos {
                 usuario2.setRolApp("Musico");
                 usuario2.setAprobado(true);  // Aprobado por defecto para pruebas
                 usuario2.setFotoPerfil("");
-                usuario1.setActivo(true);
+                usuario2.setActivo(true);
                 usuario2.setBanda(banda);
                 usuario2 = usuarioRepo.save(usuario2);
 
@@ -226,7 +226,7 @@ public class InicializadorDatos {
                 instrumento = instrumentoRepo.save(instrumento);
 
                 Evento evento = new Evento();
-                evento.setTipo("Ensayo General");
+                evento.setTipo("Ensayo");
                 evento.setDireccion("Local de la Banda, Nave 4");
                 evento.setfHora(LocalDateTime.of(2026, 3, 23, 21, 0));
                 evento.setBanda(banda);
@@ -322,6 +322,7 @@ public class InicializadorDatos {
                 lectura.setUsuario(usuario1);
                 lectura.setAnuncio(anuncio);
                 lectura.setfLectura(LocalDateTime.now());
+
                 lecturaAnuncioRepo.save(lectura);
 
                 PasajeroVehiculo pasajero = new PasajeroVehiculo();

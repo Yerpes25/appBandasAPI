@@ -1,11 +1,16 @@
 package com.example.appBandas.modelos;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.LocalDate;
-
 /**
  * Entidad que registra cuando un usuario desbloquea o consigue un logro/insignia.
  */
@@ -17,13 +22,11 @@ public class UsuarioInsignia {
     private UsuarioInsigniaId id = new UsuarioInsigniaId();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idUsuario")
-    @JoinColumn(name = "idUsuario")
+    @JoinColumn(name = "idUsuario", insertable = false, updatable = false)
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idInsignia")
-    @JoinColumn(name = "idInsignia")
+    @JoinColumn(name = "idInsignia", insertable = false, updatable = false)
     private Insignia insignia;
 
     @JsonProperty("fObtencion")

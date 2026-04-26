@@ -1,6 +1,11 @@
 package com.example.appBandas.modelos;
 
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * Entidad que define las combinaciones permitidas entre un instrumento y una
@@ -14,13 +19,11 @@ public class InstrumentoVoz {
 	private InstrumentoVozId id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("idInstrumento")
-	@JoinColumn(name = "idInstrumento")
+	@JoinColumn(name = "idInstrumento", insertable = false, updatable = false)
 	private Instrumento instrumento;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("idVoz")
-	@JoinColumn(name = "idVoz")
+	@JoinColumn(name = "idVoz", insertable = false, updatable = false)
 	private Voz voz;
 
 	public InstrumentoVoz() {

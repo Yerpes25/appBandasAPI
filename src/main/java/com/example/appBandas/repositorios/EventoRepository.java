@@ -25,8 +25,8 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
 	 */
 	List<Evento> findByBandaIdBanda(Integer idBanda);
 
-	@Query("select COUNT(DISTINCT e.banda) from Evento e where DATE(e.fHora) = CURRENT_DATE AND e.tipo LIKE '%Ensayo%'")
-	long contarEnsayosDeBandas();
+	@Query("SELECT COUNT(DISTINCT e.banda) FROM Evento e WHERE cast(e.fHora as date) = current_date AND e.tipo LIKE '%Ensayo%'")
+	Long contarEnsayosDeBandas();
 	
 	@Query("SELECT COUNT(e) FROM Evento e WHERE e.banda.idBanda = :idBanda AND e.tipo LIKE '%Ensayo%' AND e.fHora BETWEEN :inicio AND :fin")
     long contarEnsayosPorFechas(@Param("idBanda") Integer idBanda, @Param("inicio") LocalDateTime inicio, @Param("fin") LocalDateTime fin);

@@ -1,6 +1,13 @@
 package com.example.appBandas.modelos;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * Entidad intermedia que asigna a un usuario qué instrumento toca y en qué voz.
@@ -15,8 +22,7 @@ public class UsuarioInstrumento {
 	private UsuarioInstrumentoId id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("idUsuario")
-	@JoinColumn(name = "idUsuario")
+	@JoinColumn(name = "idUsuario", insertable = false, updatable = false)
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.LAZY)

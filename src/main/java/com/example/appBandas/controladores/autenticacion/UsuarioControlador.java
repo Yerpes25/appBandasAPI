@@ -92,13 +92,28 @@ public class UsuarioControlador {
         
         if (usuarioExistente.isPresent()) {
             Usuario usuario = usuarioExistente.get();
-            // Actualizamos solo los campos de la pantalla de ajustes
+            
+            // Campos básicos
             if (datosNuevos.getNombre() != null) usuario.setNombre(datosNuevos.getNombre());
             if (datosNuevos.getApellidos() != null) usuario.setApellidos(datosNuevos.getApellidos());
+            if (datosNuevos.getDni() != null) usuario.setDni(datosNuevos.getDni());
+            if (datosNuevos.getEmail() != null) usuario.setEmail(datosNuevos.getEmail());
+            if (datosNuevos.getTelefono() != null) usuario.setTelefono(datosNuevos.getTelefono());
+            if (datosNuevos.getDireccion() != null) usuario.setDireccion(datosNuevos.getDireccion());
+            
+            // Campos específicos de la banda
+            if (datosNuevos.getContactEmerg() != null) usuario.setContactEmerg(datosNuevos.getContactEmerg());
+            if (datosNuevos.getTallaCamisa() != null) usuario.setTallaCamisa(datosNuevos.getTallaCamisa());
+            if (datosNuevos.getTallaChaqueta() != null) usuario.setTallaChaqueta(datosNuevos.getTallaChaqueta());
+            if (datosNuevos.getTallaPantalon() != null) usuario.setTallaPantalon(datosNuevos.getTallaPantalon());
+            if (datosNuevos.getTallaGorra() != null) usuario.setTallaGorra(datosNuevos.getTallaGorra());
+            
+            // Otros campos
             if (datosNuevos.getBiografia() != null) usuario.setBiografia(datosNuevos.getBiografia());
             if (datosNuevos.getFotoPerfil() != null) usuario.setFotoPerfil(datosNuevos.getFotoPerfil());
             if (datosNuevos.getPassword() != null) usuario.setPassword(datosNuevos.getPassword());
             
+            // Guardamos el usuario con todos los cambios aplicados
             return ResponseEntity.ok(usuarioServicio.guardarUsuario(usuario));
         } else {
             return ResponseEntity.notFound().build();
