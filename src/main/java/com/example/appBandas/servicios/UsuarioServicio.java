@@ -50,4 +50,11 @@ public class UsuarioServicio {
     public long obtenerTodosLosUsuariosPorNumero() {
         return usuarioRepository.contarTodosLosUsuarios();
     }
+    
+    /**
+     * Obtiene la lista completa de usuarios que pertenecen a una banda concreta.
+     */
+    public List<Usuario> obtenerUsuariosPorBanda(Integer idBanda) {
+        return usuarioRepository.findByBanda_IdBanda(idBanda);
+    }
 }
