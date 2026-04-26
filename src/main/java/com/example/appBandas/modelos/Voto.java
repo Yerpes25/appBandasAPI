@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import jakarta.persistence.EmbeddedId;
 
@@ -20,11 +21,13 @@ public class Voto {
 	private VotoId id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idUsuario", insertable = false, updatable = false)
+	@MapsId("idUsuario")
+	@JoinColumn(name = "idUsuario")
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idVotacion", insertable = false, updatable = false)
+	@MapsId("idVotacion")
+	@JoinColumn(name = "idVotacion")
 	private Votacion votacion;
 
 	@Column(name = "opcion", nullable = false, length = 100)

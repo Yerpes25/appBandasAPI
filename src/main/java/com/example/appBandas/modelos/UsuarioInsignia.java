@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
@@ -22,11 +23,13 @@ public class UsuarioInsignia {
     private UsuarioInsigniaId id = new UsuarioInsigniaId();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuario", insertable = false, updatable = false)
+    @MapsId("idUsuario")
+    @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idInsignia", insertable = false, updatable = false)
+    @MapsId("idInsignia")
+    @JoinColumn(name = "idInsignia")
     private Insignia insignia;
 
     @JsonProperty("fObtencion")

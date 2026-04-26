@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,11 +24,13 @@ public class LecturaAnuncio {
     private LecturaAnuncioId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuario", insertable = false, updatable = false)
+    @MapsId("idUsuario")
+    @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idAnuncios", insertable = false, updatable = false)
+    @MapsId("idAnuncios")
+    @JoinColumn(name = "idAnuncios")
     private TablonAnuncio anuncio;
 
     @JsonProperty("fLectura")

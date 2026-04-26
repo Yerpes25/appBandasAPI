@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 /**
  * Entidad que vincula a un usuario ocupando una plaza en un coche compartido.
@@ -17,11 +18,13 @@ public class PasajeroVehiculo {
     private PasajeroVehiculoId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuario", insertable = false, updatable = false)
+    @MapsId("idUsuario")
+    @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idVehiculo", insertable = false, updatable = false)
+    @MapsId("idVehiculo")
+    @JoinColumn(name = "idVehiculo")
     private VehiculoCompartido vehiculo;
 
     public PasajeroVehiculo() {

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 /**
@@ -20,11 +21,13 @@ public class Asistencia {
 	private AsistenciaId id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idUsuario", insertable = false, updatable = false)
+	@MapsId("idUsuario")
+	@JoinColumn(name = "idUsuario")
 	private Usuario usuario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idEvento", insertable = false, updatable = false)
+	@MapsId("idEvento")
+	@JoinColumn(name = "idEvento")
 	private Evento evento;
 
 	@Column(name = "estado", length = 20)
