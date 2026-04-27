@@ -35,4 +35,8 @@ public class PartituraServicio {
     public void eliminarPartitura(Integer id) {
         partituraRepository.deleteById(id);
     }
+    
+    public List<Partitura> obtenerPorMarcha(Integer idMarcha) {
+        return partituraRepository.findByMarcha_IdMarcha(idMarcha);
+    }
 }

@@ -47,4 +47,9 @@ public class PartituraControlador {
         partituraServicio.eliminarPartitura(id);
         return ResponseEntity.ok().build();
     }
+    
+    @GetMapping("/marcha/{idMarcha}")
+    public ResponseEntity<List<Partitura>> obtenerPorMarcha(@PathVariable Integer idMarcha) {
+        return ResponseEntity.ok(partituraServicio.obtenerPorMarcha(idMarcha));
+    }
 }

@@ -54,6 +54,9 @@ public class Evento {
 
 	@Column(name = "horaFin", length = 10)
 	private String horaFin;
+	
+	@Column(name = "requiereConf", columnDefinition = "boolean default false")
+    private Boolean requiereConf;
 
 	// Constructores
 	public Evento() {
@@ -131,4 +134,12 @@ public class Evento {
 	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
 	}
+	
+	public Boolean getRequiereConf() {
+        return requiereConf;
+    }
+
+    public void setRequiereConf(Boolean requiereConf) {
+        this.requiereConf = requiereConf;
+    }
 }

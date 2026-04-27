@@ -71,7 +71,18 @@ public class EventoServicio {
 		evento.setTipo(datos.get("tipo"));
 		evento.setTitulo(datos.get("titulo")); 
 		evento.setHoraFin(datos.get("horaFin")); 
-		evento.setDireccion(datos.get("ubicacion")); 
+		evento.setDireccion(datos.get("ubicacion"));
+		
+		/*
+         * Comprobamos si nos llega la configuracion de requerir confirmacion.
+         * Lo pasamos a booleano y se lo asignamos al evento antes de guardarlo.
+         */
+        if (datos.containsKey("requiereConf") && datos.get("requiereConf") != null) {
+            evento.setRequiereConf(Boolean.parseBoolean(datos.get("requiereConf")));
+        } else {
+            // Por defecto, si no se especifica, lo ponemos a falso
+            evento.setRequiereConf(false);
+        }
 
 		if (datos.get("fecha") != null && datos.get("horaInicio") != null) {
 			String horaFormateada = datos.get("horaInicio").length() == 4 ? "0" + datos.get("horaInicio") : datos.get("horaInicio");

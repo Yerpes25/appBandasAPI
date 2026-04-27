@@ -1,5 +1,7 @@
 package com.example.appBandas.modelos;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,10 +35,18 @@ public class TablonAnuncio {
 	@Column(name = "mensaje", columnDefinition = "TEXT", nullable = false)
 	private String mensaje;
 
-	@Column(name = "requiereConf", columnDefinition = "boolean default false")
-	private Boolean requiereConf;
+	@Column(name = "fechaExpira")
+	private LocalDateTime fechaExpira;
 
 	public TablonAnuncio() {
+	}
+
+	public LocalDateTime getFechaExpira() {
+		return fechaExpira;
+	}
+
+	public void setFechaExpira(LocalDateTime fechaExpira) {
+		this.fechaExpira = fechaExpira;
 	}
 
 	public Integer getIdAnuncios() {
@@ -71,11 +81,4 @@ public class TablonAnuncio {
 		this.mensaje = mensaje;
 	}
 
-	public Boolean getRequiereConf() {
-		return requiereConf;
-	}
-
-	public void setRequiereConf(Boolean requiereConf) {
-		this.requiereConf = requiereConf;
-	}
 }

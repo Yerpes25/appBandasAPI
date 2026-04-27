@@ -3,6 +3,7 @@ package com.example.appBandas.controladores;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.appBandas.dtos.InsigniaOtorgadaDTO;
 import com.example.appBandas.modelos.Insignia;
 import com.example.appBandas.servicios.InsigniaServicio;
 
@@ -67,5 +68,15 @@ public class InsigniaControlador {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al asignar: " + e.getMessage());
         }
+    }
+    
+    /**
+     * Endpoint para consultar la vitrina de logros de un componente específico.
+     * Devuelve una lista de insignias ya obtenidas con sus fechas.
+     */
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<InsigniaOtorgadaDTO>> obtenerInsigniasPorUsuario(@PathVariable Integer idUsuario) {
+        // Llama al servicio que creamos antes
+        return ResponseEntity.ok(insigniaServicio.obtenerInsigniasDeUsuario(idUsuario));
     }
 }

@@ -3,9 +3,16 @@ package com.example.appBandas.servicios;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import com.example.appBandas.dtos.ComponenteDTO;
+import com.example.appBandas.modelos.InstrumentoVoz;
 import com.example.appBandas.modelos.Usuario;
+import com.example.appBandas.modelos.UsuarioCargo;
+import com.example.appBandas.modelos.UsuarioInstrumento;
+import com.example.appBandas.repositorios.UsuarioCargoRepository;
+import com.example.appBandas.repositorios.UsuarioInstrumentoRepository;
 import com.example.appBandas.repositorios.UsuarioRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,12 +25,18 @@ import java.util.Optional;
 public class UsuarioServicio {
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioInstrumentoRepository usuarioInstrumentoRepository;
+    private final UsuarioCargoRepository usuarioCargoRepository;
 
-    public UsuarioServicio(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
+    public UsuarioServicio(UsuarioRepository usuarioRepository,
+			UsuarioInstrumentoRepository usuarioInstrumentoRepository, UsuarioCargoRepository usuarioCargoRepository) {
+		super();
+		this.usuarioRepository = usuarioRepository;
+		this.usuarioInstrumentoRepository = usuarioInstrumentoRepository;
+		this.usuarioCargoRepository = usuarioCargoRepository;
+	}
 
-    public List<Usuario> obtenerTodosLosUsuarios() {
+	public List<Usuario> obtenerTodosLosUsuarios() {
         return usuarioRepository.findAll();
     }
 
@@ -56,5 +69,45 @@ public class UsuarioServicio {
      */
     public List<Usuario> obtenerUsuariosPorBanda(Integer idBanda) {
         return usuarioRepository.findByBanda_IdBanda(idBanda);
+    }
+    
+    public List<ComponenteDTO> obtenerDetallesComponentes(Integer idBanda) {
+        List<com.example.appBandas.modelos.Usuario> usuarios = usuarioRepository.findByBanda_IdBanda(idBanda);
+        List<ComponenteDTO> listaFinal = new java.util.ArrayList<>();
+
+        for (Usuario u : usuarios) {
+            ComponenteDTO dto = new ComponenteDTO();
+            
+            // 1. Nombre Completo
+            String nombre = u.getNombre() != null ? u.getNombre() : "";
+            String apellidos = u.getApellidos() != null ? u.getApellidos() : "";
+            dto.setNombreCompleto((nombre + " " + apellidos).trim());
+            dto.setFotoPerfil(u.getFotoPerfil());
+
+            // 2. Extraer el Cargo Real
+            List<UsuarioCargo> ucList = usuarioCargoRepository.findByUsuario_IdUsuario(u.getIdUsuario());
+            if (!ucList.isEmpty()) {
+                // Obtenemos el nombre del cargo. 
+                // (Si en tu clase RolCargo el atributo se llama 'descripcion', cambia getNombre() por getDescripcion())
+                dto.setCargo(ucList.get(0).getCargo().getNombre()); 
+            } else {
+                dto.setCargo("Músico"); // Cargo por defecto si no está en la junta
+            }
+
+            // 3. Extraer el Instrumento y la Voz Reales
+            List<UsuarioInstrumento> uiList = usuarioInstrumentoRepository.findByUsuario_IdUsuario(u.getIdUsuario());
+            if (!uiList.isEmpty()) {
+                InstrumentoVoz iv = uiList.get(0).getInstrumentoVoz();
+                // Navegamos por las entidades para sacar los nombres
+                String nomInst = iv.getInstrumento().getNombre(); 
+                String nomVoz = iv.getVoz().getNombre();
+                dto.setInstrumentoYVoz(nomInst + " / " + nomVoz);
+            } else {
+                dto.setInstrumentoYVoz("Sin instrumento asignado");
+            }
+
+            listaFinal.add(dto);
+        }
+        return listaFinal;
     }
 }

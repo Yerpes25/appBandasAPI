@@ -49,4 +49,10 @@ public class TablonAnuncioControlador {
         tablonAnuncioServicio.eliminarAnuncio(id);
         return ResponseEntity.ok().build();
     }
+    
+    @GetMapping("/banda/{idBanda}")
+    public ResponseEntity<List<TablonAnuncio>> obtenerPorBanda(@PathVariable Integer idBanda) {
+        List<TablonAnuncio> anuncios = tablonAnuncioServicio.obtenerAnunciosPorBanda(idBanda);
+        return ResponseEntity.ok(anuncios);
+    }
 }

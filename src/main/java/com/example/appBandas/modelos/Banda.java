@@ -49,6 +49,9 @@ public class Banda {
 	@Column(name = "f_fundacion")
 	private LocalDate fFundacion;
 	
+	@Column(name = "direccion")
+	private String direccion;
+	
     @JsonProperty("ultimaConexion")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "ultima_conexion")
@@ -66,10 +69,60 @@ public class Banda {
 	@JsonIgnore
 	@OneToMany(mappedBy = "banda", cascade = CascadeType.ALL)
 	private List<Evento> eventos;
+	
+	@Column(name = "instagram")
+	private String instagram;
+
+	@Column(name = "twitter")
+	private String twitter;
+
+	@Column(name = "youtube")
+	private String youtube;
 
 	public Banda() {
 	}
 	
+	
+	public String getDireccion() {
+		return direccion;
+	}
+
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+
+	public String getInstagram() {
+		return instagram;
+	}
+
+
+	public void setInstagram(String instagram) {
+		this.instagram = instagram;
+	}
+
+
+	public String getTwitter() {
+		return twitter;
+	}
+
+
+	public void setTwitter(String twitter) {
+		this.twitter = twitter;
+	}
+
+
+	public String getYoutube() {
+		return youtube;
+	}
+
+
+	public void setYoutube(String youtube) {
+		this.youtube = youtube;
+	}
+
+
 	public LocalDate getUltimaConexion() {
         return ultimaConexion;
     }

@@ -35,4 +35,12 @@ public class TablonAnuncioServicio {
     public void eliminarAnuncio(Integer id) {
         tablonAnuncioRepository.deleteById(id);
     }
+    
+    public List<TablonAnuncio> obtenerAnunciosPorBanda(Integer idBanda) {
+        /*
+         * Llamamos al metodo del repositorio que ya devuelve 
+         * los datos ordenados de fecha mas reciente a mas antigua.
+         */
+        return tablonAnuncioRepository.findByBanda_IdBandaOrderByIdAnunciosDesc(idBanda);
+    }
 }

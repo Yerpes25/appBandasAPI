@@ -61,15 +61,6 @@ public class EventoControlador {
     public long ObtenerBanda() {
     	return eventoServicio.ensayosHoyPorBanda();
     }
-    
-    /**
-     * Endpoint para obtener todos los eventos de la banda en el calendario.
-     */
-    @GetMapping("/banda/{idBanda}")
-    public ResponseEntity<List<Evento>> obtenerPorBanda(@PathVariable Integer idBanda) {
-        List<Evento> eventos = eventoServicio.obtenerEventosPorBanda(idBanda);
-        return ResponseEntity.ok(eventos);
-    }
 
     @PostMapping("/{idBanda}/nuevo")
     public ResponseEntity<?> crearEvento(@PathVariable Integer idBanda, @RequestBody java.util.Map<String, String> datos) {
@@ -79,5 +70,17 @@ public class EventoControlador {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
+    }
+    
+    /**
+     * Atiende a la peticion GET para devolver los eventos de una banda concreta.
+     * La URL final que atiende es: /api/eventos/banda/{idBanda}
+     * * @param idBanda El identificador que viene en la ruta de la URL.
+     * @return Una respuesta HTTP 200 (OK) con la lista de eventos en el cuerpo.
+     */
+    @GetMapping("/banda/{idBanda}")
+    public ResponseEntity<List<Evento>> obtenerEventosPorBanda(@PathVariable Integer idBanda) {
+        List<Evento> listaEventos = eventoServicio.obtenerEventosPorBanda(idBanda);
+        return ResponseEntity.ok(listaEventos);
     }
 }

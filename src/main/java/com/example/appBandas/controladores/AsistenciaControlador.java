@@ -3,6 +3,7 @@ package com.example.appBandas.controladores;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.appBandas.dtos.EstadisticasAsistenciaDTO;
 import com.example.appBandas.modelos.Asistencia;
 import com.example.appBandas.servicios.AsistenciaServicio;
 
@@ -49,5 +50,38 @@ public class AsistenciaControlador {
     public ResponseEntity<Void> eliminar(@PathVariable Integer idUsuario, @PathVariable Integer idEvento) {
         asistenciaServicio.eliminarAsistencia(idUsuario, idEvento);
         return ResponseEntity.ok().build();
+    }
+    
+    /*
+     * Recibe la peticion de voto desde Android. 
+     * Usamos @RequestParam para pasar los datos por la URL de forma sencilla.
+     */
+    @PostMapping("/votar")
+    public ResponseEntity<?> registrarVoto(
+            @RequestParam Integer idUsuario,
+            @RequestParam Integer idEvento,
+            @RequestParam String estado,
+    		@RequestParam(required = false) String observacion){
+        try {
+            Asistencia asistencia = asistenciaServicio.registrarVoto(idUsuario, idEvento, estado, observacion);
+            return ResponseEntity.ok(asistencia);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al registrar voto: " + e.getMessage());
+        }
+    }
+    
+    @GetMapping("/usuario/{idUsuario}")
+    public List<Asistencia> obtenerPorUsuario(@PathVariable Integer idUsuario) {
+        return asistenciaServicio.obtenerAsistenciasPorUsuario(idUsuario);
+    }
+    
+    @GetMapping("/estadisticas/{idUsuario}")
+    public ResponseEntity<com.example.appBandas.dtos.EstadisticasAsistenciaDTO> obtenerEstadisticas(@PathVariable Integer idUsuario) {
+        return ResponseEntity.ok(asistenciaServicio.obtenerEstadisticasUsuario(idUsuario));
+    }
+    
+    @GetMapping("/estadisticas-conciertos/{idUsuario}")
+    public ResponseEntity<EstadisticasAsistenciaDTO> obtenerEstadisticasConciertos(@PathVariable Integer idUsuario) {
+        return ResponseEntity.ok(asistenciaServicio.obtenerEstadisticasOtrosEventos(idUsuario));
     }
 }

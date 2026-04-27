@@ -78,4 +78,8 @@ public class MarchaServicio {
         marcha.setBanda(banda);
         return marchaRepository.save(marcha);
     }
+    
+    public List<Marcha> obtenerMarchasPorBanda(Integer idBanda) {
+        return marchaRepository.findByBanda_IdBanda(idBanda);
+    }
 }

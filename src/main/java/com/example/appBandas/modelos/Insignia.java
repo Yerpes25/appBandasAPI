@@ -29,7 +29,18 @@ public class Insignia {
 	@Column(name = "meta")
 	private Integer meta;
 
+	@Column(name = "icono", length = 255)
+	private String icono;
+
 	public Insignia() {
+	}
+
+	public String getIcono() {
+		return icono;
+	}
+
+	public void setIcono(String icono) {
+		this.icono = icono;
 	}
 
 	public Integer getIdInsignia() {

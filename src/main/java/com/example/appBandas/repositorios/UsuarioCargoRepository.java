@@ -1,5 +1,7 @@
 package com.example.appBandas.repositorios;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,5 @@ import com.example.appBandas.modelos.UsuarioCargoId;
  */
 @Repository
 public interface UsuarioCargoRepository extends JpaRepository<UsuarioCargo, UsuarioCargoId> {
+	List<UsuarioCargo> findByUsuario_IdUsuario(Integer idUsuario);
 }

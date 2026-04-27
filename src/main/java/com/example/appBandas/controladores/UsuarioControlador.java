@@ -3,6 +3,7 @@ package com.example.appBandas.controladores;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.appBandas.dtos.ComponenteDTO;
 import com.example.appBandas.modelos.CredencialesLogin;
 import com.example.appBandas.modelos.Usuario;
 import com.example.appBandas.servicios.EstadisticasDuenoServicio;
@@ -118,5 +119,15 @@ public class UsuarioControlador {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    @GetMapping("/banda/{idBanda}")
+    public ResponseEntity<List<Usuario>> obtenerPorBanda(@PathVariable Integer idBanda) {
+        return ResponseEntity.ok(usuarioServicio.obtenerUsuariosPorBanda(idBanda));
+    }
+    
+    @GetMapping("/banda/{idBanda}/detalles")
+    public ResponseEntity<List<ComponenteDTO>> obtenerDetallesPorBanda(@PathVariable Integer idBanda) {
+        return ResponseEntity.ok(usuarioServicio.obtenerDetallesComponentes(idBanda));
     }
 }

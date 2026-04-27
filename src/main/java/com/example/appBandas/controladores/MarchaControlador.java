@@ -64,4 +64,9 @@ public class MarchaControlador {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    
+    @GetMapping("/banda/{idBanda}")
+    public ResponseEntity<List<Marcha>> obtenerPorBanda(@PathVariable Integer idBanda) {
+        return ResponseEntity.ok(marchaServicio.obtenerMarchasPorBanda(idBanda));
+    }
 }
