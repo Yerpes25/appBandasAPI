@@ -38,10 +38,29 @@ public class LogControlador {
         // Se crea un mapa manualmente para devolver las tres metricas en formato clave-valor
         Map<String, Long> estadisticas = new HashMap<>();
         
-        estadisticas.put("errores24h", logServicio.contarErroresUltimas24h());
-        estadisticas.put("erroresDiaAnterior", logServicio.contarErroresDiaAnterior());
+        long erroresHoy = logServicio.contarErroresUltimas24h();
+        long erroresAyer = logServicio.contarErroresDiaAnterior();
+        
+        String tendencia = "0%";
+        if (erroresAyer > 0) {
+            long diferencia = erroresHoy - erroresAyer;
+            long porcentaje = (diferencia * 100) / erroresAyer;
+            tendencia = (porcentaje > 0 ? "+" : "") + porcentaje + "%";
+        }
+        
+        estadisticas.put("totalErrores24h", erroresHoy);
+        estadisticas.put("tendenciaPorcentual", Long.valueOf(tendencia));
         estadisticas.put("totalEventos24h", logServicio.contarTotalEventos24h());
         
         return estadisticas;
+    }
+    
+    /**
+     * Proporciona el historico de reinicios del sistema agrupados por mes.
+     * Util para detectar inestabilidad en el despliegue de Clever Cloud.
+     */
+    @GetMapping("/reinicios-mensuales")
+    public Map<String, Long> obtenerReinicios() {
+        return logServicio.consultarReiniciosMensuales();
     }
 }

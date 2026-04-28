@@ -3,7 +3,11 @@ package com.example.appBandas.servicios;
 import com.example.appBandas.modelos.LogSistema;
 import com.example.appBandas.repositorios.LogRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Servicio encargado de gestionar la logica de negocio de los registros del sistema.
@@ -41,8 +45,50 @@ public class LogServicio {
     }
 
     // Metodo utilitario para registrar un nuevo log facilmente desde otros servicios
-    public LogSistema registrarNuevoLog(String nivel, String origen, String mensaje, String contexto) {
-        LogSistema nuevoLog = new LogSistema(nivel, origen, mensaje, contexto);
-        return logRepositorio.save(nuevoLog);
+    public void registrarNuevoLog(String nivel, String origen, String mensaje, String contexto) {
+        LogSistema nuevoLog = new LogSistema();
+        nuevoLog.setFecha(LocalDateTime.now());
+        nuevoLog.setNivel(nivel);
+        nuevoLog.setOrigen(origen);
+        // Recortamos el mensaje a 900 caracteres por si acaso es un error gigante para que no rompa la BD
+        nuevoLog.setMensaje(mensaje != null && mensaje.length() > 900 ? mensaje.substring(0, 900) + "..." : mensaje);
+        nuevoLog.setContexto(contexto);
+        
+        logRepositorio.save(nuevoLog);
+    }
+    
+    /**
+     * Recupera las estadisticas de reinicios del sistema agrupadas por meses.
+     * Transforma la lista de arreglos de objetos en un mapa facil de leer.
+     */
+    public Map<String, Long> consultarReiniciosMensuales() {
+
+        List<Object[]> resultados = logRepositorio.obtenerEstadisticasReinicios();
+
+        Map<String, Long> estadisticas = new LinkedHashMap<>();
+
+        for (Object[] fila : resultados) {
+
+            String mes = null;
+            Long cantidad = 0L;
+
+            if (fila != null && fila.length >= 2) {
+
+                if (fila[0] != null) {
+                    mes = fila[0].toString();
+                }
+
+                if (fila[1] != null) {
+                    Number valorNumerico = (Number) fila[1];
+                    cantidad = valorNumerico.longValue();
+                }
+            }
+
+            if (mes != null) {
+                estadisticas.put(mes, cantidad);
+            }
+        }
+
+        return estadisticas;
     }
 }

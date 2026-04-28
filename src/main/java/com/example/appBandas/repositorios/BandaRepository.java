@@ -29,14 +29,14 @@ public interface BandaRepository extends JpaRepository<Banda, Integer> {
      * Cuenta cuantas bandas se han registrado en la app en el mes y ano actual.
      * @return El numero de bandas de este mes.
      */
-    @Query(value = "SELECT COUNT(*) FROM bandas WHERE MONTH(fecha_registro) = MONTH(CURRENT_DATE()) AND YEAR(fecha_registro) = YEAR(CURRENT_DATE())", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM banda WHERE MONTH(fecha_registro) = MONTH(CURRENT_DATE()) AND YEAR(fecha_registro) = YEAR(CURRENT_DATE())", nativeQuery = true)
     long contarBandasMesActual();
     
     /**
      * Cuenta cuantas bandas se registraron en la app exactamente el mes pasado.
      * @return El numero de bandas del mes pasado.
      */
-    @Query(value = "SELECT COUNT(*) FROM bandas WHERE MONTH(fecha_registro) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(fecha_registro) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM banda WHERE MONTH(fecha_registro) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND YEAR(fecha_registro) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)", nativeQuery = true)
     long contarBandasMesAnterior();
     
     /**
@@ -44,14 +44,14 @@ public interface BandaRepository extends JpaRepository<Banda, Integer> {
      * Utiliza la funcion DATE_SUB de MySQL para restar meses a la fecha actual.
      * @return El numero total de bandas inactivas.
      */
-    @Query(value = "SELECT COUNT(*) FROM bandas WHERE ultima_conexion < DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM banda WHERE ultima_conexion < DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)", nativeQuery = true)
     long contarBandasInactivas();
     
     /**
      * Cuenta el numero de bandas registradas en la app en las ultimas 24 horas.
      * @return El total de bandas nuevas.
      */
-    @Query(value = "SELECT COUNT(*) FROM bandas WHERE fecha_registro >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM banda WHERE fecha_registro >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)", nativeQuery = true)
     long contarBandasNuevas24h();
     
     /**
