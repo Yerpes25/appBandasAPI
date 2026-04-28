@@ -8,11 +8,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que vincula a un musico con su puesto oficial dentro de la asociacion.
- */
 @Entity
-@Table(name = "Usuarios_Cargos")
+@Table(name = "usuarios_cargos")
 public class UsuarioCargo {
 
     @EmbeddedId

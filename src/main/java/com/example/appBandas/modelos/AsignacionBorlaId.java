@@ -5,9 +5,7 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clave primaria para asociar abanderados y escoltas/borlas.
- */
+
 @Embeddable
 public class AsignacionBorlaId implements Serializable {
 

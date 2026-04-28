@@ -5,10 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clase que define la clave primaria compuesta para la tabla de Votos. Asegura
- * que un usuario solo pueda emitir un voto por votación.
- */
 @Embeddable
 public class VotoId implements Serializable {
 

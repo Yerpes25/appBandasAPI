@@ -14,13 +14,9 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Entidad que define un evento organizado por la banda, como un ensayo,
- * procesión o concierto. Contiene la información de fecha, hora y ubicación
- * para el control de asistencia.
- */
+
 @Entity
-@Table(name = "Eventos")
+@Table(name = "evento")
 public class Evento {
 
 	@Id
@@ -55,8 +51,8 @@ public class Evento {
 	@Column(name = "horaFin", length = 10)
 	private String horaFin;
 	
-	@Column(name = "requiereConf", columnDefinition = "boolean default false")
-    private Boolean requiereConf;
+	@Column(name = "requiereConf")
+    private Boolean requiereConf = false;
 
 	// Constructores
 	public Evento() {

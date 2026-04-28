@@ -10,12 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que almacena la ubicación de los archivos digitales de música.
- * Vincula cada documento PDF o audio de referencia con una marcha específica.
- */
 @Entity
-@Table(name = "Partituras")
+@Table(name = "partitura")
 public class Partitura {
 
 	@Id

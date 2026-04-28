@@ -5,10 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clase que representa la clave primaria compuesta para la tabla Lecturas_Anuncios.
- * Une el ID del usuario con el ID del anuncio.
- */
 @Embeddable
 public class LecturaAnuncioId implements Serializable {
 

@@ -10,13 +10,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
-/**
- * Entidad intermedia que asigna a un usuario qué instrumento toca y en qué voz.
- * También almacena atributos específicos de esta asignación como si es solista
- * o lleva maza.
- */
 @Entity
-@Table(name = "Usuarios_Instrumentos")
+@Table(name = "usuario_instrumento")
 public class UsuarioInstrumento {
 
 	@EmbeddedId
@@ -29,15 +24,15 @@ public class UsuarioInstrumento {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
-			@JoinColumn(name = "idInstrumento", referencedColumnName = "idInstrumento", insertable = false, updatable = false),
-			@JoinColumn(name = "idVoz", referencedColumnName = "idVoz", insertable = false, updatable = false) })
+			@JoinColumn(name = "idInstrumento", insertable = false, updatable = false),
+			@JoinColumn(name = "idVoz", insertable = false, updatable = false) })
 	private InstrumentoVoz instrumentoVoz;
 
-	@Column(name = "es_solista", columnDefinition = "boolean default false")
-	private Boolean esSolista;
+	@Column(name = "es_solista")
+	private Boolean esSolista = false;
 
-	@Column(name = "es_maza", columnDefinition = "boolean default false")
-	private Boolean esMaza;
+	@Column(name = "es_maza")
+	private Boolean esMaza = false;
 
 	public UsuarioInstrumento() {
 	}

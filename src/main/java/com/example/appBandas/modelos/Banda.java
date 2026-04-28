@@ -16,19 +16,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Entidad que representa a una banda de musica en el sistema.
- * Sirve como eje central para agrupar usuarios, eventos y recursos.
- * Incluye un identificador unico de acceso para los componentes y 
- * una fotografia de portada opcional para el perfil.
- */
+
 @Entity
-@Table(name = "bandas")
+@Table(name = "banda")
 public class Banda {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_banda")
+	@Column(name = "idBanda")
 	private Integer idBanda;
 
 	

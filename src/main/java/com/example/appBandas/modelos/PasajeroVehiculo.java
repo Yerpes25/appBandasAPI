@@ -7,11 +7,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
-/**
- * Entidad que vincula a un usuario ocupando una plaza en un coche compartido.
- */
+
 @Entity
-@Table(name = "Pasajeros_Vehiculo")
+@Table(name = "pasajero_vehiculo")
 public class PasajeroVehiculo {
 
     @EmbeddedId

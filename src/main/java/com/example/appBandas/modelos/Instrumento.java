@@ -10,12 +10,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que detalla los tipos de instrumentos disponibles en el sistema. Cada
- * instrumento pertenece a una sección específica.
- */
+
 @Entity
-@Table(name = "Instrumentos")
+@Table(name = "instrumento")
 public class Instrumento {
 
 	@Id
@@ -24,14 +21,15 @@ public class Instrumento {
 	private Integer idInstrumento;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idSeccion", nullable = false)
+	@JoinColumn(name = "idSeccion", nullable = false
+)
 	private Seccion seccion;
 
 	@Column(name = "nombre", nullable = false, length = 50)
 	private String nombre;
 
-	@Column(name = "esViento", columnDefinition = "boolean default true")
-	private Boolean esViento;
+	@Column(name = "esViento")
+	private Boolean esViento = true;
 
 	// Constructores
 	public Instrumento() {

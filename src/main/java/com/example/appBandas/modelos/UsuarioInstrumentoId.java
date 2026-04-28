@@ -5,11 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clase que representa la clave primaria compuesta tridimensional para la tabla
- * Usuarios_Instrumentos. Vincula el identificador del usuario con el del
- * instrumento y su voz.
- */
 @Embeddable
 public class UsuarioInstrumentoId implements Serializable {
 

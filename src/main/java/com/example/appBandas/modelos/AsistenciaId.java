@@ -5,10 +5,7 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clase que define la clave primaria compuesta para la tabla de Asistencia.
- * Vincula de forma única a un usuario con un evento específico.
- */
+
 @Embeddable
 public class AsistenciaId implements Serializable {
 

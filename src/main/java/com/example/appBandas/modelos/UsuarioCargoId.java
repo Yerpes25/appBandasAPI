@@ -5,9 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clave primaria compuesta para asignar roles a la junta de la banda.
- */
 @Embeddable
 public class UsuarioCargoId implements Serializable {
 

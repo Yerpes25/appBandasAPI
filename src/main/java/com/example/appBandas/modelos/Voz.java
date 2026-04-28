@@ -7,12 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que define las posibles voces o partituras que puede tener un
- * instrumento. Por ejemplo: 1º Alta, 1º Fuerte, 2º, Única.
- */
 @Entity
-@Table(name = "Voces")
+@Table(name = "voz")
 public class Voz {
 
 	@Id

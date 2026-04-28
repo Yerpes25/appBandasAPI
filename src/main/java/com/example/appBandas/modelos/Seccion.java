@@ -12,12 +12,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * Entidad que clasifica a los instrumentos por familias o secciones musicales.
- * Por ejemplo: Cornetas, Trompetas, Bajos o Percusión.
- */
 @Entity
-@Table(name = "Secciones")
+@Table(name = "seccion")
 public class Seccion {
 
 	@Id

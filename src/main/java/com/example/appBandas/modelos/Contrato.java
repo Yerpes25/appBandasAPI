@@ -11,12 +11,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-/**
- * Entidad que registra los acuerdos comerciales entre la banda y sus clientes.
- * Gestiona el importe total y las horas de servicio acordadas.
- */
+
 @Entity
-@Table(name = "Contratos")
+@Table(name = "contrato")
 public class Contrato {
 
 	@Id

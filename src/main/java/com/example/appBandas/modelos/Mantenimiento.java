@@ -13,12 +13,9 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-/**
- * Entidad para registrar los avisos de reparacion o mantenimiento 
- * de los articulos del inventario (instrumentos, uniformes).
- */
+
 @Entity
-@Table(name = "Mantenimiento")
+@Table(name = "mantenimiento")
 public class Mantenimiento {
 
     @Id
@@ -35,7 +32,7 @@ public class Mantenimiento {
     @Column(name = "fAviso", nullable = false)
     private LocalDate fAviso;
 
-    @Column(name = "descripcion", columnDefinition = "TEXT")
+    @Column(name = "descripcion", length = 250)
     private String descripcion;
 
     public Mantenimiento() {

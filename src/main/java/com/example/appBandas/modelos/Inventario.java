@@ -12,13 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que gestiona los activos físicos de la banda (instrumentos en stock,
- * uniformes). Incluye un código QR único para el control de préstamos y el
- * estado del artículo.
- */
 @Entity
-@Table(name = "Inventario")
+@Table(name = "inventario")
 public class Inventario {
 
 	@Id
@@ -46,8 +41,8 @@ public class Inventario {
 	@Column(name = "nombre", length = 100)
     private String nombre;
 
-    @Column(name = "stock", columnDefinition = "int default 0")
-    private Integer stock;
+    @Column(name = "stock")
+    private Integer stock = 0;
 
 	public Inventario() {
 	}

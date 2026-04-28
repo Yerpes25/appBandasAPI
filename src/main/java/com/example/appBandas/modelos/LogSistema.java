@@ -7,10 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-/**
- * Entidad que representa un registro de evento o error en el sistema. Se
- * utiliza para la trazabilidad y auditoria del administrador.
- */
+
 @Entity
 @Table(name = "logs_sistema")
 public class LogSistema {
@@ -24,22 +21,21 @@ public class LogSistema {
 	private LocalDateTime fecha;
 
 	@Column(name = "nivel", nullable = false, length = 10)
-	private String nivel; // INFO, WARN, ERROR
+	private String nivel; 
 
 	@Column(name = "origen", length = 50)
-	private String origen; // Ej: "Spring API", "MySQL DB"
+	private String origen; 
 
-	@Column(name = "mensaje", columnDefinition = "TEXT")
+	@Column(name = "mensaje", length = 1000)
 	private String mensaje;
 
 	@Column(name = "contexto", length = 100)
-	private String contexto; // Ej: "Usuario: admin@mail.com"
+	private String contexto; 
 
 	public LogSistema() {
 		this.fecha = LocalDateTime.now();
 	}
 
-	// Constructor rapido para crear logs facilmente
 	public LogSistema(String nivel, String origen, String mensaje, String contexto) {
 		this.fecha = LocalDateTime.now();
 		this.nivel = nivel;
@@ -48,7 +44,6 @@ public class LogSistema {
 		this.contexto = contexto;
 	}
 
-	// Getters y Setters
 	public Long getIdLog() {
 		return idLog;
 	}

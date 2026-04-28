@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
  * Entidad que enlaza a un musico principal (banderin/abanderado) con otro que lleva la borla.
  */
 @Entity
-@Table(name = "Asignacion_Borlas")
+@Table(name = "asignacion_borla")
 public class AsignacionBorla {
 
     @EmbeddedId

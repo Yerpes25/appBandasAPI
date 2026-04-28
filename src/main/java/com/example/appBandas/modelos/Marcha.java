@@ -11,12 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-/**
- * Entidad que representa las composiciones musicales del repertorio de la
- * banda. Almacena el nombre de la marcha y su autor.
- */
 @Entity
-@Table(name = "Marchas")
+@Table(name = "marcha")
 public class Marcha {
 
 	@Id

@@ -10,12 +10,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que gestiona las aportaciones económicas mensuales de los usuarios.
- * Permite llevar un control de los pagos pendientes y realizados.
- */
+
 @Entity
-@Table(name = "Cuotas")
+@Table(name = "cuota")
 public class Cuota {
 
     @Id

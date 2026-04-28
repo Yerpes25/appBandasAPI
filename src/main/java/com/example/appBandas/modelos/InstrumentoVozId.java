@@ -5,12 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clase que representa la clave primaria compuesta para la tabla
- * Instrumentos_Voces. Es necesaria en JPA para tablas intermedias sin un ID
- * autoincremental simple.
- */
-
 @Embeddable
 public class InstrumentoVozId implements Serializable {
 

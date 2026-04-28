@@ -13,11 +13,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
-/**
- * Entidad que registra el momento exacto en el que un usuario lee un anuncio del tablon.
- */
 @Entity
-@Table(name = "Lecturas_Anuncios")
+@Table(name = "lectura_anuncio")
 public class LecturaAnuncio {
 
     @EmbeddedId

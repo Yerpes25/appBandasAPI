@@ -12,12 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que representa el canal de comunicación oficial de la banda. Permite
- * publicar avisos que pueden requerir confirmación de lectura.
- */
 @Entity
-@Table(name = "TablonAnuncios")
+@Table(name = "tablon_anuncio")
 public class TablonAnuncio {
 
 	@Id
@@ -32,7 +28,7 @@ public class TablonAnuncio {
 	@Column(name = "titulo", nullable = false, length = 100)
 	private String titulo;
 
-	@Column(name = "mensaje", columnDefinition = "TEXT", nullable = false)
+	@Column(name = "mensaje", length = 250, nullable = false)
 	private String mensaje;
 
 	@Column(name = "fechaExpira")

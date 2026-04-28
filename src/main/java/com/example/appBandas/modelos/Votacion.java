@@ -13,12 +13,9 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-/**
- * Entidad que gestiona los procesos participativos de la banda. Define el tema
- * a votar, la fecha límite y si el proceso sigue abierto.
- */
+
 @Entity
-@Table(name = "Votaciones")
+@Table(name = "votacion")
 public class Votacion {
 
 	@Id
@@ -38,8 +35,8 @@ public class Votacion {
 	@Column(name = "fLimite", nullable = false)
 	private LocalDateTime fLimite;
 
-	@Column(name = "activa", columnDefinition = "boolean default true")
-	private Boolean activa;
+	@Column(name = "activa")
+	private Boolean activa = true;
 
 	public Votacion() {
 	}

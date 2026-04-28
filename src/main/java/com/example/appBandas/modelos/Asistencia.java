@@ -9,12 +9,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que registra la presencia de los músicos en los eventos. Almacena el
- * estado (Asiste, Falta, Justificado) y posibles observaciones.
- */
+
 @Entity
-@Table(name = "Asistencia")
+@Table(name = "asistencia")
 public class Asistencia {
 
 	@EmbeddedId

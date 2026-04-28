@@ -10,12 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * Entidad para gestionar los coches que los usuarios ponen a disposicion
- * de otros musicos para viajar juntos a los eventos.
- */
 @Entity
-@Table(name = "VehiculosCompartidos")
+@Table(name = "vehiculo_compartido")
 public class VehiculoCompartido {
 
     @Id

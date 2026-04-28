@@ -8,12 +8,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que define las combinaciones permitidas entre un instrumento y una
- * voz. Evita que se asigne una voz incorrecta a un instrumento en el sistema.
- */
+
 @Entity
-@Table(name = "Instrumentos_Voces")
+@Table(name = "instrumento_voz")
 public class InstrumentoVoz {
 
 	@EmbeddedId
@@ -26,7 +23,7 @@ public class InstrumentoVoz {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("idVoz")
-	@JoinColumn(name = "idVoz")
+	@JoinColumn(name = "idVoz", referencedColumnName = "idVoz")
 	private Voz voz;
 
 	public InstrumentoVoz() {

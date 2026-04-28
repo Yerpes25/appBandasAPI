@@ -11,11 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-/**
- * Entidad para registrar cualquier movimiento económico (Ingreso o Gasto).
- */
 @Entity
-@Table(name = "Transacciones")
+@Table(name = "transaccion")
 public class Transaccion {
 
     @Id
@@ -30,20 +27,19 @@ public class Transaccion {
     private String descripcion;
 
     @Column(nullable = false)
-    private Double cantidad; // Positivo para ingresos, negativo para gastos
+    private Double cantidad; 
 
     @Column(nullable = false)
-    private String categoria; // Ej: "Contrato", "Instrumentos", "Voz", etc.
+    private String categoria;
 
     @Column(nullable = false)
     private LocalDate fecha;
 
     @Column(nullable = false)
-    private String tipo; // "Ingreso" o "Gasto"
+    private String tipo; 
 
     public Transaccion() {}
 
-    // Getters y Setters...
     public Integer getIdTransaccion() { return idTransaccion; }
     public void setIdTransaccion(Integer idTransaccion) { this.idTransaccion = idTransaccion; }
     public Banda getBanda() { return banda; }

@@ -12,11 +12,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * Entidad que representa a un músico o miembro de la directiva de la banda.
- * Almacena los datos personales, de contacto y de acceso a la aplicación.
- * Incorpora el sistema de validación 'aprobado' para la sala de espera.
- */
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -54,13 +50,13 @@ public class Usuario {
 	@Column(name = "f_alta")
 	private LocalDate fAlta;
 
-	@Column(name = "activo", columnDefinition = "boolean default true")
-	private Boolean activo;
+	@Column(name = "activo")
+	private Boolean activo = true;
 
-	@Column(name = "foto_perfil", length = 500)
+	@Column(name = "foto_perfil", length = 250)
 	private String fotoPerfil;
 
-	@Column(name = "biografia", length = 500)
+	@Column(name = "biografia", length = 250)
 	private String biografia;
 
 	@Column(name = "password", nullable = false, length = 255)
@@ -83,12 +79,12 @@ public class Usuario {
 
 	@Column(name = "rolApp", length = 20)
 	private String rolApp;
-	@Column(name = "ultimoAcceso")
+	@Column(name = "ultimoAcceso", nullable = false)
 	private LocalDateTime ultimoAcceso;
 
 	// NUEVO: Atributo para la sala de espera (por defecto falso)
-	@Column(name = "aprobado", columnDefinition = "boolean default false")
-	private Boolean aprobado;
+	@Column(name = "aprobado")
+	private Boolean aprobado = false;
 
 	// Constructores
 	public Usuario() {

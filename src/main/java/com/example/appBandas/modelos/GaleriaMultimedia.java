@@ -10,12 +10,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/**
- * Entidad para almacenar las rutas de fotos, videos o audios 
- * asociados a un evento o actuacion especifica.
- */
+
 @Entity
-@Table(name = "galeriaMultimedia")
+@Table(name = "galeria_multimedia")
 public class GaleriaMultimedia {
 
     @Id

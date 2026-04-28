@@ -11,12 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-/**
- * Entidad que registra los pagos efectuados a los músicos tras una actuación.
- * Se calcula en base a los beneficios de un contrato específico.
- */
 @Entity
-@Table(name = "Liquidaciones")
+@Table(name = "liquidacion")
 public class Liquidacion {
 
 	@Id

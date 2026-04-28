@@ -9,12 +9,8 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import jakarta.persistence.EmbeddedId;
 
-/**
- * Entidad que almacena la opción elegida por un usuario en un proceso de
- * votación. Relaciona al usuario con la votación y guarda la respuesta emitida.
- */
 @Entity
-@Table(name = "Votos")
+@Table(name = "voto")
 public class Voto {
 
 	@EmbeddedId

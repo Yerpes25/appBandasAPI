@@ -7,13 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que define los cargos oficiales dentro de la banda (Director,
- * Tesorero, etc.). Controla el nombre del cargo, el tipo y el límite de
- * personas que pueden ocuparlo.
- */
 @Entity
-@Table(name = "rolesCargos")
+@Table(name = "rol_cargo")
 public class RolCargo {
 
 	@Id

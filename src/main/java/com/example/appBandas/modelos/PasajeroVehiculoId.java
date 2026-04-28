@@ -5,9 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Clave primaria compuesta para enlazar al pasajero con el vehiculo.
- */
 @Embeddable
 public class PasajeroVehiculoId implements Serializable {
 

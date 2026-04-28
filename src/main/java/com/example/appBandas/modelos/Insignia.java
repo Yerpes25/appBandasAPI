@@ -7,12 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**
- * Entidad que representa los logros o insignias que los usuarios pueden ganar.
- * Define el nombre, la descripción y la meta necesaria para obtenerla.
- */
+
 @Entity
-@Table(name = "Insignias")
+@Table(name = "insignia")
 public class Insignia {
 
 	@Id
@@ -23,7 +20,7 @@ public class Insignia {
 	@Column(name = "Nombre", nullable = false, length = 100)
 	private String nombre;
 
-	@Column(name = "descripcion", columnDefinition = "TEXT")
+	@Column(name = "descripcion", length = 1000)
 	private String descripcion;
 
 	@Column(name = "meta")

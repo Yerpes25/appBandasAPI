@@ -11,12 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
-/**
- * Entidad que controla la cesión de material del inventario a los músicos.
- * Registra la fecha de salida y la fecha de devolución del artículo.
- */
 @Entity
-@Table(name = "Prestamos")
+@Table(name = "prestamo")
 public class Prestamo {
 
 	@Id
