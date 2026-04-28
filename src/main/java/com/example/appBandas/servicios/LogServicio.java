@@ -91,4 +91,44 @@ public class LogServicio {
 
         return estadisticas;
     }
+    
+    /**
+     * Elimina un registro del sistema permanentemente usando su identificador.
+     */
+    public void eliminarLog(Long idLog) {
+        if (logRepositorio.existsById(idLog)) {
+            logRepositorio.deleteById(idLog);
+        }
+    }
+    
+ // Calcula la media de latencia extrayendo el numero del texto del log
+    public long calcularLatenciaMedia(List<String> contextosLatencia) {
+        if (contextosLatencia == null || contextosLatencia.isEmpty()) {
+            return 0;
+        }
+
+        long sumaTotal = 0;
+        int validos = 0;
+
+        for (String contexto : contextosLatencia) {
+            try {
+                // Limpiamos el texto para quedarnos solo con el numero
+                String numeroPuro = contexto.replace("Tiempo de respuesta: ", "").replace(" ms", "").trim();
+                sumaTotal += Long.parseLong(numeroPuro);
+                validos++;
+            } catch (NumberFormatException e) {
+                // Ignoramos si un texto vino corrupto
+            }
+        }
+
+        return validos > 0 ? (sumaTotal / validos) : 0;
+    }
+
+    public List<String> obtenerLatenciasHoy() {
+        return logRepositorio.obtenerLatenciasUltimas24h();
+    }
+
+    public List<String> obtenerLatenciasAyer() {
+        return logRepositorio.obtenerLatenciasDiaAnterior();
+    }
 }

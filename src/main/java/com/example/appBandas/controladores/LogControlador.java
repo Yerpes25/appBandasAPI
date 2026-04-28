@@ -2,7 +2,10 @@ package com.example.appBandas.controladores;
 
 import com.example.appBandas.modelos.LogSistema;
 import com.example.appBandas.servicios.LogServicio;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,9 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controlador REST para exponer la informacion de los logs del sistema.
- * Proporciona endpoints para que la interfaz de usuario pueda recuperar
- * el historial de eventos y pintar las estadisticas del panel de administracion.
+ * Controlador REST para exponer la informacion de los logs del sistema al panel de JavaFX.
+ * Incluye calculos reales de tiempo de actividad basados en el registro de errores.
  */
 @RestController
 @RequestMapping("/api/logs")
@@ -21,46 +23,68 @@ public class LogControlador {
 
     private final LogServicio logServicio;
 
-    // Inyeccion de dependencias manual mediante constructor
     public LogControlador(LogServicio logServicio) {
         this.logServicio = logServicio;
     }
 
-    // Endpoint para solicitar el listado de los 50 logs mas recientes
     @GetMapping("/recientes")
     public List<LogSistema> obtenerRecientes() {
         return logServicio.obtenerLogsRecientes();
     }
+    
+    @GetMapping("/reinicios-mensuales")
+    public Map<String, Long> obtenerReinicios() {
+        return logServicio.consultarReiniciosMensuales();
+    }
 
-    // Endpoint para solicitar los datos agrupados para tarjetas de estadisticas
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarLog(@PathVariable Long id) {
+        logServicio.eliminarLog(id);
+        return ResponseEntity.ok().build();
+    }
+    
     @GetMapping("/estadisticas")
-    public Map<String, Long> obtenerEstadisticas() {
-        // Se crea un mapa manualmente para devolver las tres metricas en formato clave-valor
-        Map<String, Long> estadisticas = new HashMap<>();
+    public Map<String, Object> obtenerEstadisticas() {
+        Map<String, Object> estadisticas = new HashMap<>();
         
         long erroresHoy = logServicio.contarErroresUltimas24h();
         long erroresAyer = logServicio.contarErroresDiaAnterior();
+        long totalEventos = logServicio.contarTotalEventos24h();
         
         String tendencia = "0%";
         if (erroresAyer > 0) {
             long diferencia = erroresHoy - erroresAyer;
             long porcentaje = (diferencia * 100) / erroresAyer;
             tendencia = (porcentaje > 0 ? "+" : "") + porcentaje + "%";
+        } else if (erroresHoy > 0) {
+            tendencia = "+100%"; 
         }
         
+        double porcentajeUptime = 100.0;
+        if (totalEventos > 0) {
+            porcentajeUptime = 100.0 - (((double) erroresHoy / totalEventos) * 100.0);
+        }
+
+        // --- NUEVA LOGICA DE LATENCIA REAL ---
+        long mediaHoy = logServicio.calcularLatenciaMedia(logServicio.obtenerLatenciasHoy());
+        long mediaAyer = logServicio.calcularLatenciaMedia(logServicio.obtenerLatenciasAyer());
+
+        String mejoraLatencia = "-";
+        if (mediaAyer > 0 && mediaHoy > 0) {
+            long diferencia = mediaAyer - mediaHoy; // Si hoy es menor, es positivo (mejora)
+            long porcentajeMejora = (diferencia * 100) / mediaAyer;
+            mejoraLatencia = (porcentajeMejora > 0 ? "+" : "") + porcentajeMejora + "%";
+        }
+
         estadisticas.put("totalErrores24h", erroresHoy);
-        estadisticas.put("tendenciaPorcentual", Long.valueOf(tendencia));
-        estadisticas.put("totalEventos24h", logServicio.contarTotalEventos24h());
+        estadisticas.put("tendenciaPorcentual", tendencia);
+        estadisticas.put("totalEventos24h", totalEventos);
+        estadisticas.put("tiempoActividad", String.format("%.1f%%", porcentajeUptime));
+        estadisticas.put("estadoActividad", porcentajeUptime > 95.0 ? "Estable" : "Alerta");
+        
+        estadisticas.put("latenciaMedia", mediaHoy > 0 ? mediaHoy + " ms" : "0 ms");
+        estadisticas.put("mejoraLatencia", mejoraLatencia);
         
         return estadisticas;
-    }
-    
-    /**
-     * Proporciona el historico de reinicios del sistema agrupados por mes.
-     * Util para detectar inestabilidad en el despliegue de Clever Cloud.
-     */
-    @GetMapping("/reinicios-mensuales")
-    public Map<String, Long> obtenerReinicios() {
-        return logServicio.consultarReiniciosMensuales();
     }
 }

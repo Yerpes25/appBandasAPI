@@ -37,4 +37,13 @@ public interface LogRepository extends JpaRepository<LogSistema, Long> {
                    "WHERE nivel = 'SISTEMA' AND mensaje LIKE '%iniciado%' " +
                    "GROUP BY etiqueta ORDER BY etiqueta DESC", nativeQuery = true)
     List<Object[]> obtenerEstadisticasReinicios();
+    
+ // Obtiene los textos de latencia de las ultimas 24h
+    @Query(value = "SELECT contexto FROM logs_sistema WHERE origen = 'FiltroLatencia' AND fecha >= DATE_SUB(NOW(), INTERVAL 1 DAY)", nativeQuery = true)
+    List<String> obtenerLatenciasUltimas24h();
+
+    // Obtiene los textos de latencia de hace 2 dias para comparar
+    @Query(value = "SELECT contexto FROM logs_sistema WHERE origen = 'FiltroLatencia' AND fecha >= DATE_SUB(NOW(), INTERVAL 2 DAY) AND fecha < DATE_SUB(NOW(), INTERVAL 1 DAY)", nativeQuery = true)
+    List<String> obtenerLatenciasDiaAnterior();
 }
+
