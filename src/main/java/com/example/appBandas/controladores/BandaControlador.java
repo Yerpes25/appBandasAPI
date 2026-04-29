@@ -80,4 +80,38 @@ public class BandaControlador {
         return ResponseEntity.ok(bandaServicio.obtenerEstadisticasCompletas());
     }
     
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<Void> alternarEstado(@PathVariable Integer id) {
+        Optional<Banda> bandaOpt = bandaServicio.obtenerBandaPorId(id);
+        if (bandaOpt.isPresent()) {
+            Banda banda = bandaOpt.get();
+            banda.setActivo(!banda.getActivo()); // Invierte el estado actual
+            bandaServicio.guardarBanda(banda);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}/editar")
+    public ResponseEntity<Banda> editarBanda(@PathVariable Integer id, @RequestBody Banda datosNuevos) {
+        Optional<Banda> bandaOpt = bandaServicio.obtenerBandaPorId(id);
+        if (bandaOpt.isPresent()) {
+            Banda banda = bandaOpt.get();
+            banda.setNombre(datosNuevos.getNombre());
+            banda.setDireccion(datosNuevos.getDireccion());
+            banda.setInstagram(datosNuevos.getInstagram());
+            banda.setTwitter(datosNuevos.getTwitter());
+            banda.setYoutube(datosNuevos.getYoutube());
+            return ResponseEntity.ok(bandaServicio.guardarBanda(banda));
+        }
+        return ResponseEntity.notFound().build();
+    }
+    
+    /**
+     * Endpoint para obtener las 5 bandas mas recientes para el dashboard.
+     */
+    @GetMapping("/recientes")
+    public List<Banda> obtenerRecientes() {
+        return bandaServicio.obtenerTop5Recientes();
+    }
 }

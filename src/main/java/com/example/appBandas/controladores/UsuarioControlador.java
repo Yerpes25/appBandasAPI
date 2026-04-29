@@ -113,6 +113,7 @@ public class UsuarioControlador {
             if (datosNuevos.getBiografia() != null) usuario.setBiografia(datosNuevos.getBiografia());
             if (datosNuevos.getFotoPerfil() != null) usuario.setFotoPerfil(datosNuevos.getFotoPerfil());
             if (datosNuevos.getPassword() != null) usuario.setPassword(datosNuevos.getPassword());
+            if (datosNuevos.getActivo() != null) usuario.setActivo(datosNuevos.getActivo());
             
             // Guardamos el usuario con todos los cambios aplicados
             return ResponseEntity.ok(usuarioServicio.guardarUsuario(usuario));
@@ -129,5 +130,17 @@ public class UsuarioControlador {
     @GetMapping("/banda/{idBanda}/detalles")
     public ResponseEntity<List<ComponenteDTO>> obtenerDetallesPorBanda(@PathVariable Integer idBanda) {
         return ResponseEntity.ok(usuarioServicio.obtenerDetallesComponentes(idBanda));
+    }
+    
+    @GetMapping("/banda/{idBanda}/cuenta")
+    public ResponseEntity<Long> contarComponentesPorBanda(@PathVariable Integer idBanda) {
+        // Asegúrate de crear el método correspondiente en UsuarioServicio que llame al repositorio
+        return ResponseEntity.ok(usuarioServicio.contarUsuariosPorBanda(idBanda));
+    }
+    
+    @PutMapping("/banda/{idBanda}/transferir-dueno/{idNuevoDueno}")
+    public ResponseEntity<Void> transferirDueno(@PathVariable Integer idBanda, @PathVariable Integer idNuevoDueno) {
+        usuarioServicio.transferirPropiedadDueno(idBanda, idNuevoDueno);
+        return ResponseEntity.ok().build();
     }
 }

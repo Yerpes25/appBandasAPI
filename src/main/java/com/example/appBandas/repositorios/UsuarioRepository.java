@@ -51,4 +51,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
      * Spring entiende "Banda_IdBanda" como: busca en la entidad Banda el campo idBanda.
      */
     List<Usuario> findByBanda_IdBanda(Integer idBanda);
+    
+    @Query("SELECT COUNT(u) FROM Usuario u WHERE u.banda.idBanda = :idBanda")
+    long contarUsuariosPorBanda(Integer idBanda);
 }

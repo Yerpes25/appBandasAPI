@@ -110,4 +110,30 @@ public class UsuarioServicio {
         }
         return listaFinal;
     }
+    
+    public long contarUsuariosPorBanda(Integer idBanda) {
+        return usuarioRepository.countByBanda_IdBanda(idBanda);
+    }
+    
+    /**
+     * Transfiere la propiedad de la banda. Busca al dueño actual y lo degrada a Músico,
+     * para luego ascender al nuevo usuario seleccionado al rol de Dueño.
+     */
+    public void transferirPropiedadDueno(Integer idBanda, Integer idNuevoDueno) {
+        List<Usuario> usuariosBanda = usuarioRepository.findByBanda_IdBanda(idBanda);
+        
+        for (Usuario u : usuariosBanda) {
+            if (u.getRolApp() != null && (u.getRolApp().toLowerCase().contains("due") || u.getRolApp().toLowerCase().contains("dueñ"))) {
+                u.setRolApp("Músico");
+                usuarioRepository.save(u);
+            }
+        }
+        
+        Optional<Usuario> nuevoDuenoOpt = usuarioRepository.findById(idNuevoDueno);
+        if (nuevoDuenoOpt.isPresent()) {
+            Usuario nuevoDueno = nuevoDuenoOpt.get();
+            nuevoDueno.setRolApp("Dueño");
+            usuarioRepository.save(nuevoDueno);
+        }
+    }
 }

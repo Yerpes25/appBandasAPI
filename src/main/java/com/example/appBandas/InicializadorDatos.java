@@ -143,6 +143,7 @@ public class InicializadorDatos {
                 banda1.setTwitter("https://x.com/?lang=es");
                 banda1.setInstagram("https://www.instagram.com/");
                 banda1.setYoutube("https://www.youtube.com/?app=desktop&hl=es");
+                banda1.setActivo(true);
                 banda1 = bandaRepo.save(banda1);
 
                 Banda banda2 = new Banda();
@@ -156,6 +157,7 @@ public class InicializadorDatos {
                 banda2.setTwitter("https://x.com/?lang=es");
                 banda2.setInstagram("https://www.instagram.com/");
                 banda2.setYoutube("https://www.youtube.com/?app=desktop&hl=es");
+                banda2.setActivo(true);
                 banda2 = bandaRepo.save(banda2);
 
                 Banda banda3 = new Banda();
@@ -169,6 +171,7 @@ public class InicializadorDatos {
                 banda3.setTwitter("https://x.com/?lang=es");
                 banda3.setInstagram("https://www.instagram.com/");
                 banda3.setYoutube("https://www.youtube.com/?app=desktop&hl=es");
+                banda3.setActivo(true);
                 banda3 = bandaRepo.save(banda3);
 
                 // 2. INSERCIONES DE SECCIÓN

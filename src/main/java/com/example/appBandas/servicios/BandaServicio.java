@@ -87,4 +87,12 @@ public class BandaServicio {
         
         return maleta;
     }
+    
+    /**
+     * Obtiene una lista limitada a las 5 bandas registradas mas recientemente.
+     * @return Lista de las 5 ultimas bandas.
+     */
+    public List<Banda> obtenerTop5Recientes() {
+        return bandaRepository.findTop5ByOrderByFechaRegistroDesc();
+    }
 }
