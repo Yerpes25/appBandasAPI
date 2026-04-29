@@ -22,7 +22,7 @@ public class TablonAnuncio {
 	private Integer idAnuncios;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idBanda", nullable = false)
+	@JoinColumn(name = "idBanda", nullable = true)
 	private Banda banda;
 
 	@Column(name = "titulo", nullable = false, length = 100)
@@ -34,7 +34,29 @@ public class TablonAnuncio {
 	@Column(name = "fechaExpira")
 	private LocalDateTime fechaExpira;
 
+	@Column(name = "tipo_destino", length = 20)
+	private String tipoDestino = "BANDA";
+
+	@Column(name = "id_usuario_destino")
+	private Integer idUsuarioDestino;
+
 	public TablonAnuncio() {
+	}
+
+	public String getTipoDestino() {
+		return tipoDestino;
+	}
+
+	public void setTipoDestino(String tipoDestino) {
+		this.tipoDestino = tipoDestino;
+	}
+
+	public Integer getIdUsuarioDestino() {
+		return idUsuarioDestino;
+	}
+
+	public void setIdUsuarioDestino(Integer idUsuarioDestino) {
+		this.idUsuarioDestino = idUsuarioDestino;
 	}
 
 	public LocalDateTime getFechaExpira() {

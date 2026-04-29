@@ -27,13 +27,16 @@ public class UsuarioServicio {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioInstrumentoRepository usuarioInstrumentoRepository;
     private final UsuarioCargoRepository usuarioCargoRepository;
+    private final NotificacionServicio notificacionServicio;
 
     public UsuarioServicio(UsuarioRepository usuarioRepository,
-			UsuarioInstrumentoRepository usuarioInstrumentoRepository, UsuarioCargoRepository usuarioCargoRepository) {
-		super();
+			UsuarioInstrumentoRepository usuarioInstrumentoRepository, 
+            UsuarioCargoRepository usuarioCargoRepository,
+            NotificacionServicio notificacionServicio) { 
 		this.usuarioRepository = usuarioRepository;
 		this.usuarioInstrumentoRepository = usuarioInstrumentoRepository;
 		this.usuarioCargoRepository = usuarioCargoRepository;
+        this.notificacionServicio = notificacionServicio; 
 	}
 
 	public List<Usuario> obtenerTodosLosUsuarios() {
@@ -53,7 +56,20 @@ public class UsuarioServicio {
     }
 
     public Usuario guardarUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        boolean esNuevo = (usuario.getIdUsuario() == null);
+        
+        Usuario guardado = usuarioRepository.save(usuario);
+
+        // Si es un registro nuevo y tiene banda asignada, mandamos el aviso
+        if (esNuevo && guardado.getBanda() != null) {
+            String nombreBanda = guardado.getBanda().getNombre();
+            notificacionServicio.enviarIndividual(
+                guardado.getIdUsuario(), 
+                "¡Bienvenido a " + nombreBanda + "!", 
+                "Te han dado de alta correctamente en la banda. ¡A disfrutar!"
+            );
+        }
+        return guardado;
     }
 
     public void eliminarUsuario(Integer id) {

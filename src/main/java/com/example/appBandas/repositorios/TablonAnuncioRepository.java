@@ -26,4 +26,20 @@ public interface TablonAnuncioRepository extends JpaRepository<TablonAnuncio, In
 	List<TablonAnuncio> findActivosByBanda(@Param("idBanda") Integer idBanda);
 	
 	List<TablonAnuncio> findByBanda_IdBandaOrderByIdAnunciosDesc(Integer idBanda);
+	
+	/**
+     * Busca anuncios activos considerando todos los tipos de destino:
+     * Globales, los de la banda, individuales, o los exclusivos para Dueños.
+     */
+    @Query("SELECT t FROM TablonAnuncio t WHERE " +
+           "(t.tipoDestino = 'GLOBAL' " +
+           "OR (t.tipoDestino = 'BANDA' AND t.banda.idBanda = :idBanda) " +
+           "OR (t.tipoDestino = 'INDIVIDUAL' AND t.idUsuarioDestino = :idUsuario) " +
+           "OR (t.tipoDestino = 'DUENOS' AND :rolApp LIKE '%Dueñ%')) " +
+           "AND (t.fechaExpira >= CURRENT_TIMESTAMP OR t.fechaExpira IS NULL) " +
+           "ORDER BY t.idAnuncios DESC")
+    List<TablonAnuncio> findNoticiasParaUsuario(
+            @Param("idBanda") Integer idBanda, 
+            @Param("idUsuario") Integer idUsuario,
+            @Param("rolApp") String rolApp);
 }

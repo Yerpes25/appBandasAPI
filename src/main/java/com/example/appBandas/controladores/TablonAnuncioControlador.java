@@ -55,4 +55,12 @@ public class TablonAnuncioControlador {
         List<TablonAnuncio> anuncios = tablonAnuncioServicio.obtenerAnunciosPorBanda(idBanda);
         return ResponseEntity.ok(anuncios);
     }
+    
+    @GetMapping("/usuario/{idUsuario}/banda/{idBanda}/rol/{rolApp}")
+    public ResponseEntity<List<TablonAnuncio>> obtenerNoticiasCompletas(
+            @PathVariable Integer idUsuario, 
+            @PathVariable Integer idBanda,
+            @PathVariable String rolApp) {
+        return ResponseEntity.ok(tablonAnuncioServicio.obtenerAnunciosCompletos(idBanda, idUsuario, rolApp));
+    }
 }
