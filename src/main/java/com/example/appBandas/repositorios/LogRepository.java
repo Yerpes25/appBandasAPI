@@ -32,7 +32,7 @@ public interface LogRepository extends JpaRepository<LogSistema, Long> {
      * Obtiene el conteo de reinicios agrupados por mes.
      * Se utiliza una consulta nativa compatible con MySQL 5.5.
      */
-    @Query(value = "SELECT DATE_FORMAT(fecha_creacion, '%Y-%m') as etiqueta, COUNT(*) as cantidad " +
+    @Query(value = "SELECT DATE_FORMAT(fecha, '%Y-%m') as etiqueta, COUNT(*) as cantidad " +
                    "FROM logs_sistema " +
                    "WHERE nivel = 'SISTEMA' AND mensaje LIKE '%iniciado%' " +
                    "GROUP BY etiqueta ORDER BY etiqueta DESC", nativeQuery = true)

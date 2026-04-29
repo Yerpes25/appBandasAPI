@@ -44,12 +44,15 @@ public class LogServicio {
         return logRepositorio.contarTotalEventos24h();
     }
 
-    // Metodo utilitario para registrar un nuevo log facilmente desde otros servicios
+ // Metodo utilitario para registrar un nuevo log facilmente desde otros servicios
     public void registrarNuevoLog(String nivel, String origen, String mensaje, String contexto) {
         LogSistema nuevoLog = new LogSistema();
         nuevoLog.setFecha(LocalDateTime.now());
         nuevoLog.setNivel(nivel);
-        nuevoLog.setOrigen(origen);
+        
+        // PROTECCIÓN MANUAL: Recortamos el origen a 50 caracteres máximos para que no explote MySQL
+        nuevoLog.setOrigen(origen != null && origen.length() > 50 ? origen.substring(0, 50) : origen);
+        
         // Recortamos el mensaje a 900 caracteres por si acaso es un error gigante para que no rompa la BD
         nuevoLog.setMensaje(mensaje != null && mensaje.length() > 900 ? mensaje.substring(0, 900) + "..." : mensaje);
         nuevoLog.setContexto(contexto);
