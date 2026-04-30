@@ -99,6 +99,14 @@ public class UsuarioServicio {
             String apellidos = u.getApellidos() != null ? u.getApellidos() : "";
             dto.setNombreCompleto((nombre + " " + apellidos).trim());
             dto.setFotoPerfil(u.getFotoPerfil());
+            dto.setIdUsuario(u.getIdUsuario());
+            dto.setNombre(u.getNombre() != null ? u.getNombre() : "");
+            dto.setApellidos(u.getApellidos() != null ? u.getApellidos() : "");
+            dto.setDni(u.getDni() != null ? u.getDni() : "");
+            dto.setTelefono(u.getTelefono() != null ? u.getTelefono() : "");
+            dto.setEmail(u.getEmail() != null ? u.getEmail() : "");
+            dto.setDireccion(u.getDireccion() != null ? u.getDireccion() : "");
+            dto.setRolApp(u.getRolApp() != null ? u.getRolApp() : "");
 
             // 2. Extraer el Cargo Real
             List<UsuarioCargo> ucList = usuarioCargoRepository.findByUsuario_IdUsuario(u.getIdUsuario());

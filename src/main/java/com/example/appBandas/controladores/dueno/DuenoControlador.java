@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,16 @@ public class DuenoControlador {
             return ResponseEntity.ok("Músico guardado con éxito");
         } else {
             return ResponseEntity.badRequest().body("Error al guardar el músico");
+        }
+    }
+    
+    @PutMapping("/componentes/actualizar/{idUsuario}")
+    public ResponseEntity<String> actualizarMusico(@PathVariable Integer idUsuario, @RequestBody Map<String, String> datos) {
+        boolean actualizado = componentesServicio.actualizarMusico(idUsuario, datos);
+        if (actualizado) {
+            return ResponseEntity.ok("Músico actualizado con éxito");
+        } else {
+            return ResponseEntity.badRequest().body("Error al actualizar el músico");
         }
     }
 }
