@@ -9,7 +9,7 @@ public class ComponenteDTO {
 	private String email;
 	private String direccion;
 	private String rolApp;
-
+	private Boolean activo;
 	private String nombreCompleto;
 	private String fotoPerfil;
 	private String instrumentoYVoz;
@@ -17,8 +17,15 @@ public class ComponenteDTO {
 
 	public ComponenteDTO() {
 	}
+	
+	public Boolean getActivo() {
+		return activo;
+	}
 
-	// ¡Añade los Getters y Setters de los 8 campos nuevos que hemos puesto arriba!
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
 	public Integer getIdUsuario() {
 		return idUsuario;
 	}

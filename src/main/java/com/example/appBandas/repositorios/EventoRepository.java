@@ -35,4 +35,6 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
 
 	@Query("SELECT COUNT(u) FROM Usuario u WHERE u.banda.idBanda = :idBanda AND u.ultimoAcceso >= :fechaLimite")
 	long contarMusicosActivos(Integer idBanda, LocalDateTime fechaLimite);
+	
+	List<Evento> findByBanda_IdBandaOrderByFHoraDesc(Integer idBanda);
 }

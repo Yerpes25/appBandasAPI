@@ -15,4 +15,5 @@ import com.example.appBandas.modelos.Marcha;
 public interface MarchaRepository extends JpaRepository<Marcha, Integer> {
 	List<Marcha> findTop5ByBanda_IdBandaOrderByFMontajeDesc(Integer idBanda);
 	List<Marcha> findByBanda_IdBanda(Integer idBanda);
+	List<Marcha> findByBanda_IdBandaOrderByFMontajeDesc(Integer idBanda);
 }

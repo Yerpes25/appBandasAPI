@@ -53,10 +53,11 @@ public class EventoServicio {
 	}
 
 	/**
-	 * Devuelve una lista de eventos que pertenecen exclusivamente a una banda.
+	 * Devuelve una lista de eventos que pertenecen exclusivamente a una banda,
+     * ordenados por fecha de forma descendente.
 	 */
 	public List<Evento> obtenerEventosPorBanda(Integer idBanda) {
-		return eventoRepository.findByBandaIdBanda(idBanda);
+		return eventoRepository.findByBanda_IdBandaOrderByFHoraDesc(idBanda);
 	}
 
 	public Evento crearEventoParaBanda(Integer idBanda, java.util.Map<String, String> datos) throws Exception {

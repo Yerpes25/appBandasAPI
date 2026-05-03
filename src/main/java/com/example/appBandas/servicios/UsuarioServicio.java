@@ -73,7 +73,12 @@ public class UsuarioServicio {
     }
 
     public void eliminarUsuario(Integer id) {
-        usuarioRepository.deleteById(id);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            usuario.setActivo(false); 
+            usuarioRepository.save(usuario);
+        }
     }
     
     public long obtenerTodosLosUsuariosPorNumero() {
@@ -92,6 +97,8 @@ public class UsuarioServicio {
         List<ComponenteDTO> listaFinal = new java.util.ArrayList<>();
 
         for (Usuario u : usuarios) {
+            
+
             ComponenteDTO dto = new ComponenteDTO();
             
             // 1. Nombre Completo
@@ -107,22 +114,20 @@ public class UsuarioServicio {
             dto.setEmail(u.getEmail() != null ? u.getEmail() : "");
             dto.setDireccion(u.getDireccion() != null ? u.getDireccion() : "");
             dto.setRolApp(u.getRolApp() != null ? u.getRolApp() : "");
+            dto.setActivo(u.getActivo() != null ? u.getActivo() : true);
 
             // 2. Extraer el Cargo Real
             List<UsuarioCargo> ucList = usuarioCargoRepository.findByUsuario_IdUsuario(u.getIdUsuario());
             if (!ucList.isEmpty()) {
-                // Obtenemos el nombre del cargo. 
-                // (Si en tu clase RolCargo el atributo se llama 'descripcion', cambia getNombre() por getDescripcion())
                 dto.setCargo(ucList.get(0).getCargo().getNombre()); 
             } else {
-                dto.setCargo("Músico"); // Cargo por defecto si no está en la junta
+                dto.setCargo("Músico"); 
             }
 
             // 3. Extraer el Instrumento y la Voz Reales
             List<UsuarioInstrumento> uiList = usuarioInstrumentoRepository.findByUsuario_IdUsuario(u.getIdUsuario());
             if (!uiList.isEmpty()) {
                 InstrumentoVoz iv = uiList.get(0).getInstrumentoVoz();
-                // Navegamos por las entidades para sacar los nombres
                 String nomInst = iv.getInstrumento().getNombre(); 
                 String nomVoz = iv.getVoz().getNombre();
                 dto.setInstrumentoYVoz(nomInst + " / " + nomVoz);

@@ -16,6 +16,7 @@ import com.example.appBandas.repositorios.ContratoRepository;
 import com.example.appBandas.repositorios.EventoRepository;
 import com.example.appBandas.repositorios.InventarioRepository;
 import com.example.appBandas.repositorios.MarchaRepository;
+import com.example.appBandas.repositorios.TransaccionRepository;
 import com.example.appBandas.repositorios.UsuarioRepository;
 
 @Service
@@ -24,19 +25,23 @@ public class EstadisticasDuenoServicio {
     private final UsuarioRepository usuarioRepo;
     private final EventoRepository eventoRepo;
     private final ContratoRepository contratoRepo;
+    private final TransaccionRepository transaccionRepo;
     private final InventarioRepository inventarioRepo;
     private final MarchaRepository marchaRepo;
 
     public EstadisticasDuenoServicio(UsuarioRepository usuarioRepo, EventoRepository eventoRepo,
-            ContratoRepository contratoRepo, InventarioRepository inventarioRepo, MarchaRepository marchaRepo) {
-        this.usuarioRepo = usuarioRepo;
-        this.eventoRepo = eventoRepo;
-        this.contratoRepo = contratoRepo;
-        this.inventarioRepo = inventarioRepo;
-        this.marchaRepo = marchaRepo;
-    }
+			ContratoRepository contratoRepo, TransaccionRepository transaccionRepo, InventarioRepository inventarioRepo,
+			MarchaRepository marchaRepo) {
+		super();
+		this.usuarioRepo = usuarioRepo;
+		this.eventoRepo = eventoRepo;
+		this.contratoRepo = contratoRepo;
+		this.transaccionRepo = transaccionRepo;
+		this.inventarioRepo = inventarioRepo;
+		this.marchaRepo = marchaRepo;
+	}
 
-    public EstadisticasDuenoInicioDTO generarMaletaDueño(Integer idBanda) {
+	public EstadisticasDuenoInicioDTO generarMaletaDueño(Integer idBanda) {
         EstadisticasDuenoInicioDTO maleta = new EstadisticasDuenoInicioDTO();
 
         // ---------------------------------------------------------
@@ -49,14 +54,21 @@ public class EstadisticasDuenoServicio {
         maleta.setMusicosActivos(usuarioRepo.contarMusicosActivos(idBanda, haceUnDia));
 
         // ---------------------------------------------------------
-        // 2. TARJETA ENSAYOS (Comparativa de 7 días)
+        // 2. TARJETA ENSAYOS (Comparativa Lunes a Domingo)
         // ---------------------------------------------------------
-        LocalDateTime hoy = LocalDateTime.now();
-        LocalDateTime hace7Dias = hoy.minusDays(7);
-        LocalDateTime hace14Dias = hoy.minusDays(14);
+        LocalDateTime ahora = LocalDateTime.now();
+        
+        // Calculamos el Lunes a las 00:00 y el Domingo a las 23:59 de ESTA semana
+        LocalDateTime inicioEstaSemana = ahora.with(java.time.DayOfWeek.MONDAY).toLocalDate().atStartOfDay();
+        LocalDateTime finEstaSemana = ahora.with(java.time.DayOfWeek.SUNDAY).toLocalDate().atTime(23, 59, 59);
 
-        long ensayosEstaSemana = eventoRepo.contarEnsayosDeBandas();
-        long ensayosSemanaPasada = eventoRepo.contarEnsayosPorFechas(idBanda, hace14Dias, hace7Dias);
+        // Calculamos el Lunes y el Domingo de la semana PASADA
+        LocalDateTime inicioSemanaPasada = inicioEstaSemana.minusWeeks(1);
+        LocalDateTime finSemanaPasada = finEstaSemana.minusWeeks(1);
+
+        // Contamos los ensayos en esos rangos exactos de fechas
+        long ensayosEstaSemana = eventoRepo.contarEnsayosPorFechas(idBanda, inicioEstaSemana, finEstaSemana);
+        long ensayosSemanaPasada = eventoRepo.contarEnsayosPorFechas(idBanda, inicioSemanaPasada, finSemanaPasada);
         
         maleta.setTotalEnsayos(ensayosEstaSemana);
         
@@ -64,7 +76,7 @@ public class EstadisticasDuenoServicio {
         if (diferenciaEnsayos > 0) {
             maleta.setEnsayosComparativa("+" + diferenciaEnsayos);
         } else if (diferenciaEnsayos < 0) {
-            maleta.setEnsayosComparativa(String.valueOf(diferenciaEnsayos)); // Ya lleva el menos
+            maleta.setEnsayosComparativa(String.valueOf(diferenciaEnsayos)); // Ya lleva el menos negativo
         } else {
             maleta.setEnsayosComparativa("0");
         }
@@ -73,34 +85,23 @@ public class EstadisticasDuenoServicio {
         // 3. TARJETA INGRESOS (Comparativa de Trimestres - 3 meses)
         // ---------------------------------------------------------
         LocalDate hoyFecha = LocalDate.now();
-        LocalDate hace3Meses = hoyFecha.minusMonths(3);
-        LocalDate hace6Meses = hoyFecha.minusMonths(6);
+        int mesActual = hoyFecha.getMonthValue();
+        int mesInicioTrimestre = ((mesActual - 1) / 3) * 3 + 1;
+        LocalDate inicioTrimestre = LocalDate.of(hoyFecha.getYear(), mesInicioTrimestre, 1);
 
-        double ingresosEsteTrimestre = contratoRepo.sumarIngresosPorFechas(idBanda, hace3Meses, hoyFecha);
-        double ingresosTrimestrePasado = contratoRepo.sumarIngresosPorFechas(idBanda, hace6Meses, hace3Meses);
+        Double ingresosEsteTrimestre = transaccionRepo.sumarIngresosRecientes(idBanda, inicioTrimestre);
 
-        maleta.setIngresosTrimestral(ingresosEsteTrimestre);
+        maleta.setIngresosTrimestral(ingresosEsteTrimestre != null ? ingresosEsteTrimestre : 0.0);
+        
+        maleta.setPorcentajeIngresos("");
+        maleta.setEstadoIngresos("");
 
-        if (ingresosTrimestrePasado == 0) {
-            maleta.setPorcentajeIngresos(ingresosEsteTrimestre > 0 ? "+100" : "0");
-            maleta.setEstadoIngresos(ingresosEsteTrimestre > 0 ? "EXCELENTE" : "ESTABLE");
-        } else {
-            double diferenciaDinero = ingresosEsteTrimestre - ingresosTrimestrePasado;
-            long porcentaje = Math.round((diferenciaDinero / ingresosTrimestrePasado) * 100);
-            
-            maleta.setPorcentajeIngresos((porcentaje > 0 ? "+" : "") + porcentaje);
-            
-            if (porcentaje >= 10) maleta.setEstadoIngresos("EXCELENTE");
-            else if (porcentaje >= 0) maleta.setEstadoIngresos("ESTABLE");
-            else maleta.setEstadoIngresos("ALERTA");
-        }
-
-        // ---------------------------------------------------------
+     // ---------------------------------------------------------
         // 4. TABLAS (Convertimos los objetos en Listas de Textos simples)
         // ---------------------------------------------------------
         
-        // Tabla de Marchas (Top 5 más nuevas)
-        List<Marcha> marchasNuevasBD = marchaRepo.findTop5ByBanda_IdBandaOrderByFMontajeDesc(idBanda);
+        // Tabla de Marchas (Pedimos todas en vez de 5 para que el frontend pagine)
+        List<Marcha> marchasNuevasBD = marchaRepo.findByBanda_IdBandaOrderByFMontajeDesc(idBanda);
         List<Map<String, String>> listaMarchasJSON = new ArrayList<>();
         
         for (Marcha m : marchasNuevasBD) {
